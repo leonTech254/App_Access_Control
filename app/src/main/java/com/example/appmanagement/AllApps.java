@@ -49,29 +49,29 @@ public class AllApps extends AppCompatActivity {
         for (PackageInfo packageInfo : packageList) {
             ApplicationInfo applicationInfo = packageInfo.applicationInfo;
 //            if ((applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
-                Drawable appIcon = packageManager.getApplicationIcon(applicationInfo);
-                String appName = packageManager.getApplicationLabel(applicationInfo).toString();
-                System.out.println(appName);
+            Drawable appIcon = packageManager.getApplicationIcon(applicationInfo);
+            String appName = packageManager.getApplicationLabel(applicationInfo).toString();
+            System.out.println(appName);
 
-                String[] processname = appName.split("\\ ");
-                System.out.println(processname);
+            String[] processname = appName.split("\\ ");
+            System.out.println(processname);
 
-                String packageName = applicationInfo.packageName;
+            String packageName = applicationInfo.packageName;
 
-                // Get the requested permissions for the current application
-                String[] permissions = packageInfo.requestedPermissions;
+            // Get the requested permissions for the current application
+            String[] permissions = packageInfo.requestedPermissions;
 
-                // Print the application name and its permissions
-                if (permissions != null) {
-                    System.out.println("Requested permissions:");
-                    for (String permission : permissions) {
-                        System.out.println(permission);
-                    }
+            // Print the application name and its permissions
+            if (permissions != null) {
+                System.out.println("Requested permissions:");
+                for (String permission : permissions) {
+                    System.out.println(permission);
                 }
+            }
 
-                AppItems AppItems = new AppItems(appName, appIcon, packageName);
-                appItems.add(AppItems);
-
+            AppItems AppItems = new AppItems(appName, appIcon, packageName);
+            appItems.add(AppItems);
+//        }
         }
     }
 

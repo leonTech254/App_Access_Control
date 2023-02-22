@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void setAsDefaultLauncher(View view) {
         Toast.makeText(this, "Hello world", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this,AllApps.class);
+        Intent intent = new Intent(this,Camera2_auth.class);
         startActivity(intent);
 
 
