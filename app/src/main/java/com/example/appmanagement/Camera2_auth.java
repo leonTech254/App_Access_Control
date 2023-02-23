@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -182,6 +183,12 @@ public class Camera2_auth extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         cameraExecutor.shutdown();
+    }
+
+    public void toApps(View view)
+    {
+        Intent intent = new Intent(this,AllApps.class);
+        startActivity(intent);
     }
 }
 

@@ -40,7 +40,7 @@
             android:id="@+id/Toaaps"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Enroll face"
+            android:text="All apps"
             android:layout_weight="1"
             android:onClick="toApps"
             />

@@ -48,7 +48,7 @@ public class AllApps extends AppCompatActivity {
         @SuppressLint("QueryPermissionsNeeded") List<PackageInfo> packageList = packageManager.getInstalledPackages(PackageManager.GET_PERMISSIONS);
         for (PackageInfo packageInfo : packageList) {
             ApplicationInfo applicationInfo = packageInfo.applicationInfo;
-//            if ((applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
+            if ((applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
             Drawable appIcon = packageManager.getApplicationIcon(applicationInfo);
             String appName = packageManager.getApplicationLabel(applicationInfo).toString();
             System.out.println(appName);
@@ -71,7 +71,7 @@ public class AllApps extends AppCompatActivity {
 
             AppItems AppItems = new AppItems(appName, appIcon, packageName);
             appItems.add(AppItems);
-//        }
+        }
         }
     }
 
