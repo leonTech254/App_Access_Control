@@ -49,18 +49,7 @@ public class AppListManageAdaptor extends RecyclerView.Adapter<AppListManageAdap
             }
         });
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String packageName = appItems.get(position).getPackageName();
-                Intent launchIntent = context.getPackageManager().getLaunchIntentForPackage(packageName);
-                if (launchIntent != null) {
-                    context.startActivity(launchIntent);
-                }
 
-
-            }
-        });
 
 
     }
