@@ -8,8 +8,10 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,6 +42,13 @@ public class AppListManageAdaptor extends RecyclerView.Adapter<AppListManageAdap
         AppItems AppItems = appItems.get(position);
         holder.AppName.setText(AppItems.getAppName());
         holder.AppIcon.setImageDrawable(AppItems.getAppIcon());
+        holder.Appmarker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, AppItems.getAppName(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,12 +74,14 @@ public class AppListManageAdaptor extends RecyclerView.Adapter<AppListManageAdap
     {
         public TextView AppName;
         public ImageView AppIcon;
+        public CheckBox Appmarker;
 
 
         public AppHolder(@NonNull View itemView) {
             super(itemView);
             AppName=(TextView) itemView.findViewById(R.id.appName);
             AppIcon= (ImageView) itemView.findViewById(R.id.appIcon);
+            Appmarker=(CheckBox) itemView.findViewById(R.id.AppCheckBox);
 
         }
     }

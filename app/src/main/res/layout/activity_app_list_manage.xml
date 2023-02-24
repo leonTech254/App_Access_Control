@@ -26,19 +26,64 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/white" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/omegle"
-        android:text="Manage App Permission"
-        android:textColor="@color/red"
-        android:textSize="30dp"
-
         app:layout_constraintBottom_toBottomOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"
+        android:orientation="vertical"
+
+        >
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/omegle"
+            android:text="Manage App Permission"
+            android:textColor="@color/red"
+            android:textSize="30dp"
+
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            >
+            <TextView
+                android:id="@+id/user_permission_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/handpackscript"
+                android:text="Set permission For: "
+                android:textColor="@color/red"
+                android:textSize="20dp"
+
+                />
+            <TextView
+                android:id="@+id/user_permission_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/handpackscript"
+                android:text="Jonathan"
+                android:textColor="@color/teal_200"
+                android:textSize="20dp"
+
+                />
+
+
+        </LinearLayout>
+
+
+
+
+
+
+    </LinearLayout>
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
