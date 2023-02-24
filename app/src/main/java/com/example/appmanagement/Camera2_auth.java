@@ -187,7 +187,7 @@ public class Camera2_auth extends AppCompatActivity {
 
     public void toApps(View view)
     {
-        Intent intent = new Intent(this,AllApps.class);
+        Intent intent = new Intent(this,AppListManage.class);
         startActivity(intent);
     }
 }
