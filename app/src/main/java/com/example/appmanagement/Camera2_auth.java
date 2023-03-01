@@ -37,6 +37,10 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+
+
+
+
 public class Camera2_auth extends AppCompatActivity {
 
     private static final String TAG = "Camera2_auth";
