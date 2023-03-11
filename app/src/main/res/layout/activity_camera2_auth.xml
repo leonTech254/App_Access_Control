@@ -1,13 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Camera2_auth">
-    <androidx.camera.view.PreviewView
-        android:id="@+id/preview_view"
+    tools:context=".Camera2_auth"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/background"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="REGISTER NEW USERS"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+
+
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutCamera"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_marginTop="16dp"
@@ -15,19 +38,59 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.111"
-        android:background="@drawable/image_area_display"
-        />
+        app:layout_constraintVertical_bias="0.111">
+        <org.opencv.android.JavaCamera2View
+            android:id="@+id/openCvCamera"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:visibility="gone"
+            app:camera_id="any"
+            app:show_fps="false" />
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        app:layout_constraintTop_toBottomOf="@+id/preview_view"
+        app:layout_constraintTop_toBottomOf="@+id/layoutCamera"
         tools:layout_editor_absoluteX="16dp"
         android:gravity="center"
+        android:orientation="vertical"
         >
-
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/Rusername"
+            android:hint="Username"
+            android:textColorHint="@color/white"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:hint="email"
+            android:inputType="textEmailAddress"
+            android:id="@+id/Remail"
+            android:textColorHint="@color/white"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:inputType="textPassword"
+            android:id="@+id/Rpassword"
+            android:hint="Password"
+            android:textColorHint="@color/white"
+            />
         <Button
             android:id="@+id/capture_button"
             android:layout_width="wrap_content"
@@ -35,18 +98,17 @@
             android:text="Enroll face"
             android:layout_weight="1"
             android:layout_marginRight="2dp"
+            android:onClick="EnrollFace"
             />
-        <Button
-            android:id="@+id/Toaaps"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="All apps"
-            android:layout_weight="1"
-            android:onClick="toApps"
-            />
-
-
+<!--        <Button-->
+<!--            android:id="@+id/Toaaps"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="All apps"-->
+<!--            android:layout_weight="1"-->
+<!--            android:onClick="toApps"-->
+<!--            />-->
     </LinearLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
