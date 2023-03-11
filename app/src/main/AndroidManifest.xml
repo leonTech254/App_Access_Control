@@ -30,6 +30,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="s">
         <activity
+            android:name=".PermisionOverView"
+            android:exported="false" />
+        <activity
             android:name=".EnrollSuccess"
             android:exported="false" />
         <activity

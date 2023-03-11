@@ -1,55 +1,38 @@
 package com.example.appmanagement;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.View;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class AppListManage extends AppCompatActivity {
+public class PermisionOverView extends AppCompatActivity {
+
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private List<AppItems> appItems;
-    private  String Email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_app_list_manage);
-        if(getSupportActionBar()!=null)
-        {
-            getSupportActionBar().hide();
-        }
-
-        recyclerView=(RecyclerView) findViewById(R.id.recyclerView_permission);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        appItems =new ArrayList<>();
-
-        adapter =new AppListManageAdaptor(appItems,this);
-        recyclerView.setAdapter(adapter);
-        apps();
-
-        Email= getIntent().getStringExtra("email");
-
-
+        setContentView(R.layout.activity_permision_over_view);
     }
+
+
     public void apps() {
         PackageManager packageManager = getPackageManager();
         @SuppressLint("QueryPermissionsNeeded") List<PackageInfo> packageList = packageManager.getInstalledPackages(PackageManager.GET_PERMISSIONS);
         for (PackageInfo packageInfo : packageList) {
             ApplicationInfo applicationInfo = packageInfo.applicationInfo;
+
+//            filter application according database permission
+//
             if ((applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
                 Drawable appIcon = packageManager.getApplicationIcon(applicationInfo);
                 String appName = packageManager.getApplicationLabel(applicationInfo).toString();
@@ -76,14 +59,4 @@ public class AppListManage extends AppCompatActivity {
             }
         }
     }
-
-
-    public  void  ToOverViewPermissions(View view)
-    {
-        Intent intent = new Intent();
-        intent.putExtra("email",Email);
-        startActivity(intent);
-
-    }
-
 }

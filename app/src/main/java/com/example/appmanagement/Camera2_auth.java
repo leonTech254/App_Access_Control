@@ -246,7 +246,9 @@ public class Camera2_auth extends CameraActivity {
                                         if (message.equals("success"))
                                         {
                                             Intent intent=new Intent(getApplicationContext(),EnrollSuccess.class);
+                                            intent.putExtra("email",EMailSend);
                                             startActivity(intent);
+
 
 
                                         }
