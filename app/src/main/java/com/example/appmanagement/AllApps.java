@@ -37,6 +37,7 @@ public class AllApps extends AppCompatActivity {
         recyclerView.setLayoutManager(new GridLayoutManager(this,4));
         appItems =new ArrayList<>();
 
+
         adapter =new AppAdaptor(appItems,this);
         recyclerView.setAdapter(adapter);
         apps();

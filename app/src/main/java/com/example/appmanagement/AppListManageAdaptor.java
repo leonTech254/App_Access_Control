@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class AppListManageAdaptor extends RecyclerView.Adapter<AppListManageAdaptor.AppHolder> {
+    Dbhelper db;
     public AppListManageAdaptor(List<AppItems> appItems, Context context) {
         this.appItems = appItems;
         this.context = context;
@@ -26,6 +27,16 @@ public class AppListManageAdaptor extends RecyclerView.Adapter<AppListManageAdap
 
     private List<AppItems> appItems;
     private Context context;
+    AppListManage methods;
+
+    public AppListManageAdaptor(Context context) {
+
+    }
+    public void me()
+    {
+        Toast.makeText(context, "hello world", Toast.LENGTH_SHORT).show();
+
+    }
 
     @NonNull
     @Override
@@ -46,6 +57,9 @@ public class AppListManageAdaptor extends RecyclerView.Adapter<AppListManageAdap
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, AppItems.getAppName(), Toast.LENGTH_SHORT).show();
+                db=new Dbhelper(context);
+                db.AddTempApp(AppItems.getAppName());
+
             }
         });
 

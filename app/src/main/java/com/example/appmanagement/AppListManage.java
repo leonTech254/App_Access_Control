@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -13,11 +14,14 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AppListManage extends AppCompatActivity {
+
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private List<AppItems> appItems;
@@ -40,10 +44,9 @@ public class AppListManage extends AppCompatActivity {
         adapter =new AppListManageAdaptor(appItems,this);
         recyclerView.setAdapter(adapter);
         apps();
-
         Email= getIntent().getStringExtra("email");
-
-
+        TextView DispalyId=findViewById(R.id.user_permission_value);
+        DispalyId.setText(Email);
     }
     public void apps() {
         PackageManager packageManager = getPackageManager();
@@ -77,12 +80,19 @@ public class AppListManage extends AppCompatActivity {
         }
     }
 
+    public void AddItemList()
+    {
+        Toast.makeText(this, "hello leon", Toast.LENGTH_SHORT).show();
+    }
+
 
     public  void  ToOverViewPermissions(View view)
     {
-        Intent intent = new Intent();
-        intent.putExtra("email",Email);
-        startActivity(intent);
+
+
+//        Intent intent = new Intent(this,PermisionOverView.class);
+//        intent.putExtra("email",Email);
+//        startActivity(intent);
 
     }
 

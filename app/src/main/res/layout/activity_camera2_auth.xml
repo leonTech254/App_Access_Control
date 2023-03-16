@@ -91,6 +91,7 @@
             android:hint="Password"
             android:textColorHint="@color/white"
             />
+
         <Button
             android:id="@+id/capture_button"
             android:layout_width="wrap_content"
@@ -100,6 +101,7 @@
             android:layout_marginRight="2dp"
             android:onClick="EnrollFace"
             />
+
 <!--        <Button-->
 <!--            android:id="@+id/Toaaps"-->
 <!--            android:layout_width="wrap_content"-->

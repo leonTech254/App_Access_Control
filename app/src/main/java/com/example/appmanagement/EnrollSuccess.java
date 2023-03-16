@@ -15,6 +15,7 @@ public class EnrollSuccess extends AppCompatActivity {
         setContentView(R.layout.activity_enroll_success);
         String UserEmail=getIntent().getStringExtra("email");
         Email=UserEmail;
+
     }
 
 

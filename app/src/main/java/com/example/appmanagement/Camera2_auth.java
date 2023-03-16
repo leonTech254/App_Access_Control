@@ -23,6 +23,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -81,6 +83,7 @@ public class Camera2_auth extends CameraActivity {
     private static boolean sendData=false;
     static Context context;
     private static int MIN_IMAGES=2;
+    ImageView preview;
     private  static  int registrationFaceCount;
 
 //    define data to send
@@ -125,7 +128,7 @@ public class Camera2_auth extends CameraActivity {
         EditText Name=(EditText) findViewById(R.id.Rusername);
         EditText EMail=(EditText) findViewById(R.id.Remail);
         EditText password=(EditText) findViewById(R.id.Rpassword);
-        if(Name.getText().toString().equals("")||EMail.getText().toString().equals("") ||password.getText().toString().equals("") )
+        if(Name.getText().toString().equals("d")||EMail.getText().toString().equals("d") ||password.getText().toString().equals("d") )
         {
             Toast.makeText(this, "All field required", Toast.LENGTH_SHORT).show();
 
@@ -158,6 +161,7 @@ public class Camera2_auth extends CameraActivity {
         @Override
         public void onCameraViewStopped() {
 
+
         }
 
 
@@ -175,6 +179,9 @@ public class Camera2_auth extends CameraActivity {
             Mat mRgba = inputFrame.rgba();
             //            converting image to grey scale
             Mat greyImage = inputFrame.gray();
+
+
+
 
             MatOfRect faces = new MatOfRect();
 //            rotating the images colored
@@ -208,6 +215,7 @@ public class Camera2_auth extends CameraActivity {
                 Rect[] facesArray = faces.toArray();
                 for(int i=0; i<facesArray.length;i++)
                 {
+
                     Imgproc.rectangle(mRgbaT, facesArray[i].tl(), facesArray[i].br(), new Scalar(0, 255, 0, 255), 3);
                     System.out.println("face recongonation detected");
                     if(sendData)//if a button is clicked
@@ -215,74 +223,26 @@ public class Camera2_auth extends CameraActivity {
                         registrationFaceCount++;
                         if(registrationFaceCount>=MIN_IMAGES)
                         {
-                            // Convert frame to Bitmap
+                            Bitmap bmp = Bitmap.createBitmap(mRgbaT.cols(), mRgbaT.rows(), Bitmap.Config.ARGB_8888);
+                            Utils.matToBitmap(mRgbaT, bmp);
+
                             Mat mat = inputFrame.rgba();
-                            Bitmap bitmap = Bitmap.createBitmap(mat.cols(), mat.rows(), Bitmap.Config.ARGB_8888);
-                            Utils.matToBitmap(mat, bitmap);
-
-// Convert Bitmap to byte array
-                            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-                            byte[] imageBytes = outputStream.toByteArray();
-
-// Encode byte array as Base64 string
-                            String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-
-// Create request body
-                            HashMap<String, String> params = new HashMap<>();
-                            params.put("image", encodedImage);
-                            params.put("email",EMailSend);
-                            JSONObject requestBody = new JSONObject(params);
-
-// Send request using Volley
-                            String url = "http://192.168.43.225:5000/";
-
-                            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, requestBody, new Response.Listener<JSONObject>() {
-                                @Override
-                                public void onResponse(JSONObject response) {
-                                    // Handle response from server here
-                                    try {
-                                        String message = response.getString("info");
-                                        if (message.equals("success"))
-                                        {
-                                            Intent intent=new Intent(getApplicationContext(),EnrollSuccess.class);
-                                            intent.putExtra("email",EMailSend);
-                                            startActivity(intent);
+                            Bitmap SendImage = Bitmap.createBitmap(mat.cols(), mat.rows(), Bitmap.Config.ARGB_8888);
+                            Utils.matToBitmap(mat, SendImage);
+                            ToRegisterUser(bmp,SendImage);
 
 
 
-                                        }
-
-                                    } catch (JSONException e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                }
-                            }, new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    // Handle error response from server here
-                                    System.out.println(error);
-                                }
-                            });
-
-// Add request to Volley request queue
-                            Volley.newRequestQueue(getApplicationContext()).add(request);
-
-
-
-
+//                    destroy image After Training
+//                    onDestroy();
 
 
                         }
 
                     }
+
                 }
-
-
-
 //
-
-
                 System.out.println("okay");
                 cascadeDir.delete();
             }
@@ -298,6 +258,34 @@ public class Camera2_auth extends CameraActivity {
 
             return mRgbaT;
         }
+
+        public void ToRegisterUser(Bitmap Image,Bitmap OriginImage) {
+
+            System.out.println("hello bmp");
+            // setting bitmap to ImageView on the UI thread
+            // Create Intent and send Bitmap as extra
+            Intent intent = new Intent(Camera2_auth.this, RegisterUser.class);
+
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            Image.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+
+//            orinal image
+            ByteArrayOutputStream stream_original = new ByteArrayOutputStream();
+            OriginImage.compress(Bitmap.CompressFormat.PNG, 100, stream_original);
+            byte[] byteArray_original = stream_original.toByteArray();
+
+
+
+
+            intent.putExtra("image", byteArray);
+            intent.putExtra("image_original", byteArray_original);
+            intent.putExtra("email",EMailSend);
+            intent.putExtra("name",name);
+            startActivity(intent);
+
+        }
+
 
 
 

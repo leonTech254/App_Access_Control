@@ -15,6 +15,7 @@ public class Dbhelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE AllUsers(_id INTEGER PRIMARY KEY AUTOINCREMENT,Username TEXT,password TEXT DEFAULT '12345',permission TEXT DEFAULT 'user',AllowedApp TEXT DEFAULT 'false')");
+        db.execSQL("CREATE TABLE TempApplication(_id INTEGER PRIMARY KEY AUTOINCREMENT,AppName TEXT)");
     }
 
     @Override
@@ -38,6 +39,22 @@ public class Dbhelper extends SQLiteOpenHelper {
 
         }
 
+        long response=db.insert("TempApplication",null,contentValues);
+        if(response==-1)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    public  boolean AddTempApp(String AppName)
+    {
+        SQLiteDatabase db=this.getReadableDatabase();
+        ContentValues contentValues= new ContentValues();
+        contentValues.put("AppName",AppName);
+
         long response=db.insert("AllUsers",null,contentValues);
         if(response==-1)
         {
@@ -48,4 +65,5 @@ public class Dbhelper extends SQLiteOpenHelper {
             return true;
         }
     }
+
 }
