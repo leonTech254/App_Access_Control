@@ -78,8 +78,6 @@ public class AppListManageAdaptor extends RecyclerView.Adapter<AppListManageAdap
         public TextView AppName;
         public ImageView AppIcon;
         public CheckBox Appmarker;
-
-
         public AppHolder(@NonNull View itemView) {
             super(itemView);
             AppName=(TextView) itemView.findViewById(R.id.appName);

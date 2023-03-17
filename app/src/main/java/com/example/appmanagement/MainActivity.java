@@ -60,17 +60,10 @@ public class MainActivity extends AppCompatActivity {
         timer = new Timer();
         timer.schedule(timerTask, 0, REFRESH_RATE);
 
-
-
-
-
-
-
-
     }
     public void setAsDefaultLauncher(View view) {
         Toast.makeText(this, "Hello world", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this,AppListManage.class);
+        Intent intent = new Intent(this,AccessGate.class);
         startActivity(intent);
 
 
