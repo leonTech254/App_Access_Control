@@ -2,6 +2,7 @@ package com.example.appmanagement;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -14,7 +15,7 @@ public class Dbhelper extends SQLiteOpenHelper {
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE AllUsers(_id INTEGER PRIMARY KEY AUTOINCREMENT,Username TEXT,password TEXT DEFAULT '12345',permission TEXT DEFAULT 'user',AllowedApp TEXT DEFAULT 'false')");
+        db.execSQL("CREATE TABLE AllUsers(_id INTEGER PRIMARY KEY AUTOINCREMENT,UserID TEXT, Email TEXT,Username TEXT,password TEXT DEFAULT '12345',permission TEXT DEFAULT 'user',AllowedApp TEXT DEFAULT 'false')");
         db.execSQL("CREATE TABLE TempApplication(_id INTEGER PRIMARY KEY AUTOINCREMENT,AppName TEXT)");
     }
 
@@ -23,21 +24,15 @@ public class Dbhelper extends SQLiteOpenHelper {
 
     }
 
-    public  boolean AddUsers(String username,String sender, String read,String permission)
+    public  boolean AddUsers(String username, String UserID, String password, String email)
     {
         SQLiteDatabase db=this.getReadableDatabase();
         ContentValues contentValues= new ContentValues();
         contentValues.put("Username",username);
-        contentValues.put("password",sender);
-        if(permission.equals("user"))
-        {
-
-            contentValues.put("permission","user");
-        }else
-        {
-            contentValues.put("permission",permission);
-
-        }
+        contentValues.put("password",password);
+        contentValues.put("Email",email);
+        contentValues.put("UserID",UserID);
+       
 
         long response=db.insert("TempApplication",null,contentValues);
         if(response==-1)
@@ -65,5 +60,28 @@ public class Dbhelper extends SQLiteOpenHelper {
             return true;
         }
     }
+    public Cursor getUsersByID(String id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] projection = {
+                "UserID",
+                "Username",
+                "password",
+                "permission",
+                "AllowedApp"
+        };
+        String selection = "UserID = ?";
+        String[] selectionArgs = { id };
+        Cursor cursor = db.query(
+                "AllUsers",
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+        return cursor;
+    }
+
 
 }

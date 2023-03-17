@@ -10,6 +10,7 @@ import android.util.Base64;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -27,8 +28,11 @@ import java.util.HashMap;
 
 public class RegisterUser extends AppCompatActivity {
     private String email;
+    private  String name;
+    private String password;
     private byte[] byteArray;
     private  byte[] byteArray_original;
+    Dbhelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +51,10 @@ public class RegisterUser extends AppCompatActivity {
         byteArray = getIntent().getByteArrayExtra("image");
         byteArray_original = getIntent().getByteArrayExtra("image_original");
 
-        String name=getIntent().getStringExtra("name");
+        name=getIntent().getStringExtra("name");
         email=getIntent().getStringExtra("email");
+        password=getIntent().getStringExtra("password");
+
         TextView nameView=findViewById(R.id.name);
         nameView.setText(name);
         TextView emailView=findViewById(R.id.email);
@@ -104,11 +110,23 @@ public class RegisterUser extends AppCompatActivity {
                 // Handle response from server here
                 try {
                     String message = response.getString("info");
+                    String UserID=response.getString("userId");
                     if (message.equals("success"))
                     {
-                        Intent intent=new Intent(getApplicationContext(),EnrollSuccess.class);
-                        intent.putExtra("email",EMailSend);
-                        startActivity(intent);
+
+
+
+                       Boolean dbResponse= db.AddUsers(name,UserID,password,EMailSend);
+                       if(dbResponse)
+                       {
+                           Intent intent=new Intent(getApplicationContext(),EnrollSuccess.class);
+                           intent.putExtra("email",EMailSend);
+                           startActivity(intent);
+
+                       }else
+                       {
+                           Toast.makeText(RegisterUser.this, "Failed to save", Toast.LENGTH_SHORT).show();
+                       }
 
 
 

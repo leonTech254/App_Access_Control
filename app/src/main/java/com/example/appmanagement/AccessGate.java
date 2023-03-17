@@ -203,6 +203,7 @@ public class AccessGate extends CameraActivity {
                     Imgproc.rectangle(mRgbaT, facesArray[i].tl(), facesArray[i].br(), new Scalar(0, 255, 0, 255), 3);
                     if(sendData)//if a button is clicked
                     {
+                        Toast.makeText(AccessGate.this, "Attempt to send", Toast.LENGTH_SHORT).show();
                         registrationFaceCount++;
                         if(registrationFaceCount>=MIN_IMAGES)
                         {
@@ -226,17 +227,21 @@ public class AccessGate extends CameraActivity {
                             JSONObject requestBody = new JSONObject(params);
 
 // Send request using Volley
-                            String url = "http://192.168.43.225:5000/api/train/faces";
+                            String url = "http://192.168.43.225:5000/api/rec/faces";
                             JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, requestBody, new Response.Listener<JSONObject>() {
                                 @Override
                                 public void onResponse(JSONObject response) {
                                     // Handle response from server here
                                     try {
                                         String message = response.getString("info");
+                                        String userId=response.getString("userID");
                                         if (message.equals("success"))
                                         {
-                                            Intent intent=new Intent(getApplicationContext(),EnrollSuccess.class);
-                                            intent.putExtra("email",EMailSend);
+
+
+                                            Intent intent=new Intent(getApplicationContext(),AccessAs.class);
+                                            intent.putExtra("userId",userId);
+
                                             startActivity(intent);
 
                                         }

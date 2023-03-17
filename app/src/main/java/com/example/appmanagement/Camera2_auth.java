@@ -89,6 +89,7 @@ public class Camera2_auth extends CameraActivity {
 //    define data to send
     private static String EMailSend;
     private static String name;
+    private  String passwordSend;
     private BaseLoaderCallback mLoaderCallBack = new BaseLoaderCallback(this) {
         @Override
         public void onManagerConnected(int status) {
@@ -140,6 +141,7 @@ public class Camera2_auth extends CameraActivity {
 
             EMailSend=EMail.getText().toString();
             name=Name.getText().toString();
+            passwordSend=password.getText().toString();
 
             mOpenCvCamewaView.setVisibility(SurfaceView.VISIBLE);
             mOpenCvCamewaView.setCvCameraViewListener(cvCameraViewListener);
@@ -282,6 +284,7 @@ public class Camera2_auth extends CameraActivity {
             intent.putExtra("image_original", byteArray_original);
             intent.putExtra("email",EMailSend);
             intent.putExtra("name",name);
+            intent.putExtra("password",passwordSend);
             startActivity(intent);
 
         }
