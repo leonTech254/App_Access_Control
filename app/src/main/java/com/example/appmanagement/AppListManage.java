@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -26,6 +27,8 @@ public class AppListManage extends AppCompatActivity {
     private RecyclerView.Adapter adapter;
     private List<AppItems> appItems;
     private  String Email;
+    private SharedPreferences sharedPreferences;
+    Dbhelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,10 @@ public class AppListManage extends AppCompatActivity {
         Email= getIntent().getStringExtra("email");
         TextView DispalyId=findViewById(R.id.user_permission_value);
         DispalyId.setText(Email);
+        sharedPreferences =getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("apps","");
+        editor.apply();
     }
     public void apps() {
         PackageManager packageManager = getPackageManager();
@@ -84,10 +91,20 @@ public class AppListManage extends AppCompatActivity {
     {
         Toast.makeText(this, "hello leon", Toast.LENGTH_SHORT).show();
     }
-
-
     public  void  ToOverViewPermissions(View view)
     {
+        String value = sharedPreferences.getString("apps", "");
+        Toast.makeText(this, value, Toast.LENGTH_SHORT).show();
+        db=new Dbhelper(this);
+        boolean dbresponse=db.updatePermission(Email,value);
+        if(dbresponse)
+        {
+            Toast.makeText(this, "Permission set Successfully", Toast.LENGTH_SHORT).show();
+        }else
+        {
+            Toast.makeText(this, "Failed to set permission", Toast.LENGTH_SHORT).show();
+        }
+
 
 
 //        Intent intent = new Intent(this,PermisionOverView.class);

@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.app.LauncherActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +18,23 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AppListManageAdaptor extends RecyclerView.Adapter<AppListManageAdaptor.AppHolder> {
     Dbhelper db;
+    private SharedPreferences sharedPreferences;
+
+
+
+
     public AppListManageAdaptor(List<AppItems> appItems, Context context) {
         this.appItems = appItems;
         this.context = context;
+        this.sharedPreferences = context.getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
+
+
     }
 
     private List<AppItems> appItems;
@@ -34,7 +46,7 @@ public class AppListManageAdaptor extends RecyclerView.Adapter<AppListManageAdap
     }
     public void me()
     {
-        Toast.makeText(context, "hello world", Toast.LENGTH_SHORT).show();
+
 
     }
 
@@ -56,9 +68,19 @@ public class AppListManageAdaptor extends RecyclerView.Adapter<AppListManageAdap
         holder.Appmarker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, AppItems.getAppName(), Toast.LENGTH_SHORT).show();
-                db=new Dbhelper(context);
-                db.AddTempApp(AppItems.getAppName());
+                if(holder.Appmarker.isChecked())
+                {
+                    Toast.makeText(context, AppItems.getAppName(), Toast.LENGTH_SHORT).show();
+                    ManagePermission(AppItems.getAppName());
+
+                }else
+                {
+//                    remove item
+                    RemoveApp(AppItems.getAppName());
+                }
+
+
+
 
             }
         });
@@ -66,6 +88,46 @@ public class AppListManageAdaptor extends RecyclerView.Adapter<AppListManageAdap
 
 
 
+    }
+
+    public  void ManagePermission(String appname)
+    {
+
+
+        String value = sharedPreferences.getString("apps", "");
+        if(!value.isEmpty())
+        {
+            String newApps=value+","+appname;
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("apps",newApps);
+            editor.apply();
+
+            Toast.makeText(context, value, Toast.LENGTH_SHORT).show();
+
+        }else
+        {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("apps",appname);
+            editor.apply();
+            Toast.makeText(context, value, Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+
+    public  void  RemoveApp(String AppName)
+    {
+        String appListString = sharedPreferences.getString("apps", "");
+        String[] namesArray = appListString.split(",");
+        List<String> ApplistTemp = new ArrayList<>(Arrays.asList(namesArray));
+        ApplistTemp.remove(AppName);
+        String NewappListString = TextUtils.join(",", ApplistTemp);
+//appdating sessionApp
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("apps",NewappListString);
+        editor.apply();
+
+        Toast.makeText(context, NewappListString, Toast.LENGTH_SHORT).show();
     }
 
     @Override

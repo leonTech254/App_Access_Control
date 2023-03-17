@@ -32,9 +32,8 @@ public class Dbhelper extends SQLiteOpenHelper {
         contentValues.put("password",password);
         contentValues.put("Email",email);
         contentValues.put("UserID",UserID);
-       
 
-        long response=db.insert("TempApplication",null,contentValues);
+        long response=db.insert("AllUsers",null,contentValues);
         if(response==-1)
         {
             return false;
@@ -44,6 +43,20 @@ public class Dbhelper extends SQLiteOpenHelper {
             return true;
         }
     }
+    public boolean updatePermission(String email, String permissions) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("permissions", permissions);
+
+        int result = db.update("AllUsers", values, "Email=?", new String[]{email});
+
+        return result > 0;
+    }
+
+
+
+
     public  boolean AddTempApp(String AppName)
     {
         SQLiteDatabase db=this.getReadableDatabase();

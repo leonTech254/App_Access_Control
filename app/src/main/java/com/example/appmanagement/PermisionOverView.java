@@ -1,15 +1,19 @@
 package com.example.appmanagement;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PermisionOverView extends AppCompatActivity {
@@ -17,11 +21,30 @@ public class PermisionOverView extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private List<AppItems> appItems;
+    private  String usernamedb;
+    private  String userID;
+    private  String dbpermission;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_permision_over_view);
+
+        if(getSupportActionBar()!=null)
+        {
+            getSupportActionBar().hide();
+        }
+
+        recyclerView=(RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(this,4));
+        appItems =new ArrayList<>();
+
+
+        adapter =new AppAdaptor(appItems,this);
+        recyclerView.setAdapter(adapter);
+        getData();
+        apps();
     }
 
 
@@ -30,9 +53,6 @@ public class PermisionOverView extends AppCompatActivity {
         @SuppressLint("QueryPermissionsNeeded") List<PackageInfo> packageList = packageManager.getInstalledPackages(PackageManager.GET_PERMISSIONS);
         for (PackageInfo packageInfo : packageList) {
             ApplicationInfo applicationInfo = packageInfo.applicationInfo;
-
-//            filter application according database permission
-//
             if ((applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
                 Drawable appIcon = packageManager.getApplicationIcon(applicationInfo);
                 String appName = packageManager.getApplicationLabel(applicationInfo).toString();
@@ -53,10 +73,34 @@ public class PermisionOverView extends AppCompatActivity {
                         System.out.println(permission);
                     }
                 }
+                if (dbpermission.contains(packageName))
+                {
+                    AppItems AppItems = new AppItems(appName, appIcon, packageName);
+                    appItems.add(AppItems);
+                }
 
-                AppItems AppItems = new AppItems(appName, appIcon, packageName);
-                appItems.add(AppItems);
+
             }
         }
     }
+    public  void getData()
+    {
+//        getting username from database
+        Dbhelper dbHelper = new Dbhelper(this);
+        Cursor cursor = dbHelper.getUsersByID(userID);
+        if (cursor.moveToFirst()) {
+            do {
+               usernamedb = cursor.getString(cursor.getColumnIndexOrThrow("Username"));
+                String password = cursor.getString(cursor.getColumnIndexOrThrow("password"));
+                dbpermission = cursor.getString(cursor.getColumnIndexOrThrow("permission"));
+                String allowedApp = cursor.getString(cursor.getColumnIndexOrThrow("AllowedApp"));
+                // do something with the retrieved data
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        TextView username=findViewById(R.id.username);
+        username.setText(usernamedb);
+    }
+
 }

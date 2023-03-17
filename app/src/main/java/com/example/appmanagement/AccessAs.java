@@ -15,6 +15,7 @@ public class AccessAs extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_access_as);
         userID=getIntent().getStringExtra("userId");
+        getData();
 
     }
 

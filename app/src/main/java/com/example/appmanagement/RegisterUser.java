@@ -115,7 +115,7 @@ public class RegisterUser extends AppCompatActivity {
                     {
 
 
-
+                        db= new Dbhelper(getApplicationContext());
                        Boolean dbResponse= db.AddUsers(name,UserID,password,EMailSend);
                        if(dbResponse)
                        {
