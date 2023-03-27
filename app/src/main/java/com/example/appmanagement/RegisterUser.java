@@ -121,6 +121,7 @@ public class RegisterUser extends AppCompatActivity {
                        {
                            Intent intent=new Intent(getApplicationContext(),EnrollSuccess.class);
                            intent.putExtra("email",EMailSend);
+                           intent.putExtra("usedId",UserID);
                            startActivity(intent);
 
                        }else

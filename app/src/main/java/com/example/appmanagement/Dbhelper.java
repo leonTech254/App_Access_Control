@@ -15,7 +15,7 @@ public class Dbhelper extends SQLiteOpenHelper {
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE AllUsers(_id INTEGER PRIMARY KEY AUTOINCREMENT,UserID TEXT, Email TEXT,Username TEXT,password TEXT DEFAULT '12345',permission TEXT DEFAULT 'user',AllowedApp TEXT DEFAULT 'false')");
+        db.execSQL("CREATE TABLE AllUsers(_id INTEGER PRIMARY KEY AUTOINCREMENT,UserID TEXT, Email TEXT,Username TEXT,password TEXT DEFAULT '12345',permission TEXT DEFAULT 'all',AllowedApp TEXT DEFAULT 'false')");
         db.execSQL("CREATE TABLE TempApplication(_id INTEGER PRIMARY KEY AUTOINCREMENT,AppName TEXT)");
     }
 
@@ -47,7 +47,7 @@ public class Dbhelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put("permissions", permissions);
+        values.put("permission", permissions);
 
         int result = db.update("AllUsers", values, "Email=?", new String[]{email});
 
@@ -95,6 +95,31 @@ public class Dbhelper extends SQLiteOpenHelper {
         );
         return cursor;
     }
+
+
+
+    public Cursor getAllUsers() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] projection = {
+                "UserID",
+                "Username",
+                "password",
+                "permission",
+                "AllowedApp"
+        };
+        Cursor cursor = db.query(
+                "AllUsers",
+                projection,
+                null, // no selection
+                null, // no selectionArgs
+                null,
+                null,
+                null
+        );
+        return cursor;
+    }
+
+
 
 
 }

@@ -30,6 +30,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="s">
         <activity
+            android:name=".ViewAllUsers"
+            android:exported="false" />
+        <activity
             android:name=".AccessAs"
             android:exported="false" />
         <activity
