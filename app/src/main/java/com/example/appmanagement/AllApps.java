@@ -13,6 +13,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,6 +79,11 @@ public class AllApps extends AppCompatActivity {
             appItems.add(AppItems);
         }
         }
+    }
+    public void toSettings(View view)
+    {
+        Intent intent = new Intent(this,Settings.class);
+        startActivity(intent);
     }
 
 

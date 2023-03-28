@@ -24,8 +24,11 @@
         app:layout_constraintHorizontal_bias="0.864"
         app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/white" />
-        onclic
+        app:tint="@color/white"
+        android:onClick="toSettings"
+
+        />
+
 
     <TextView
         android:id="@+id/textView"
