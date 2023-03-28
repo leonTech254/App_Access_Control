@@ -27,7 +27,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="100dp"
         android:clickable="true"
-        android:onClick="setAsDefaultLauncher"
+        android:onClick="StartApplications"
        />
 
 

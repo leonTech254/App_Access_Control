@@ -61,11 +61,6 @@ public class PermisionOverView extends AppCompatActivity {
 
 
 
-
-
-
-
-
         PackageManager packageManager = getPackageManager();
         @SuppressLint("QueryPermissionsNeeded") List<PackageInfo> packageList = packageManager.getInstalledPackages(PackageManager.GET_PERMISSIONS);
         for (PackageInfo packageInfo : packageList) {

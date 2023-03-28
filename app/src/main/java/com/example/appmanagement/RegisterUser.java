@@ -2,7 +2,9 @@ package com.example.appmanagement;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -33,6 +35,7 @@ public class RegisterUser extends AppCompatActivity {
     private byte[] byteArray;
     private  byte[] byteArray_original;
     Dbhelper db;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,10 +122,24 @@ public class RegisterUser extends AppCompatActivity {
                        Boolean dbResponse= db.AddUsers(name,UserID,password,EMailSend);
                        if(dbResponse)
                        {
-                           Intent intent=new Intent(getApplicationContext(),EnrollSuccess.class);
-                           intent.putExtra("email",EMailSend);
-                           intent.putExtra("usedId",UserID);
-                           startActivity(intent);
+        //                           manage path
+                           sharedPreferences =getSharedPreferences("alert", Context.MODE_PRIVATE);
+                           String value = sharedPreferences.getString("user", "");
+                           if(value.equals("admin"))
+                           {
+                               Intent intent = new Intent(getApplicationContext() ,Admin_Success_Register.class);
+                               startActivity(intent);
+
+
+                           }else
+                           {
+                               Intent intent=new Intent(getApplicationContext(),EnrollSuccess.class);
+                               intent.putExtra("email",EMailSend);
+                               intent.putExtra("usedId",UserID);
+                               startActivity(intent);
+
+                           }
+
 
                        }else
                        {

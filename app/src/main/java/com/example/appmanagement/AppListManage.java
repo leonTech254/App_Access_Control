@@ -27,6 +27,7 @@ public class AppListManage extends AppCompatActivity {
     private RecyclerView.Adapter adapter;
     private List<AppItems> appItems;
     private  String Email;
+    private  String UserID;
     private SharedPreferences sharedPreferences;
     Dbhelper db;
 
@@ -48,6 +49,7 @@ public class AppListManage extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         apps();
         Email= getIntent().getStringExtra("email");
+        UserID=getIntent().getStringExtra("userId");
         TextView DispalyId=findViewById(R.id.user_permission_value);
         DispalyId.setText(Email);
         sharedPreferences =getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
@@ -100,6 +102,10 @@ public class AppListManage extends AppCompatActivity {
         if(dbresponse)
         {
             Toast.makeText(this, "Permission set Successfully", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this,PermisionOverView.class);
+            intent.putExtra("userId",UserID);
+            startActivity(intent);
+
         }else
         {
             Toast.makeText(this, "Failed to set permission", Toast.LENGTH_SHORT).show();

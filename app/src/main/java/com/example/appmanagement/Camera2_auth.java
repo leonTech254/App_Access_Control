@@ -148,6 +148,7 @@ public class Camera2_auth extends CameraActivity {
             mOpenCvCamewaView.setCameraIndex(1);
         }
 
+
     }
     @Override
     protected List<? extends CameraBridgeViewBase> getCameraViewList() {
@@ -268,6 +269,7 @@ public class Camera2_auth extends CameraActivity {
             // Create Intent and send Bitmap as extra
             Intent intent = new Intent(Camera2_auth.this, RegisterUser.class);
 
+
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             Image.compress(Bitmap.CompressFormat.PNG, 100, stream);
             byte[] byteArray = stream.toByteArray();
@@ -285,6 +287,8 @@ public class Camera2_auth extends CameraActivity {
             intent.putExtra("email",EMailSend);
             intent.putExtra("name",name);
             intent.putExtra("password",passwordSend);
+
+
             startActivity(intent);
 
         }

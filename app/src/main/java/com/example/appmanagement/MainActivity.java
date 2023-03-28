@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private TimerTask timerTask;
     private  final int REFRESH_RATE=1000;
     private Calendar calendar;
+    private Boolean CheckUserExistance;
+    private SharedPreferences sharedPreferences;
 
 
     @SuppressLint("MissingInflatedId")
@@ -59,15 +64,83 @@ public class MainActivity extends AppCompatActivity {
         };
         timer = new Timer();
         timer.schedule(timerTask, 0, REFRESH_RATE);
+        CheckUserExistance=false;
+        allUsers();
 
     }
-    public void setAsDefaultLauncher(View view) {
-        Toast.makeText(this, "Hello world", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this,ViewAllUsers.class);
-        startActivity(intent);
+    public void StartApplications(View view) {
+
+
+
+//        check if
+        if(CheckUserExistance)
+        {
+            Toast.makeText(this, "Verify", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this,AccessGate.class);
+            startActivity(intent);
+
+        }else
+        {
+            Toast.makeText(this, "No User Initially registered. You Take all Privileges", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this,Camera2_auth.class);
+//            notfity the other activity not to ask the user to se permission
+            sharedPreferences =getSharedPreferences("alert", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("user","admin");
+            editor.apply();
+
+            startActivity(intent);
+
+        }
+
+
+
+
+
+
 
 
     }
+
+    public  void allUsers()
+    {
+
+
+//        getting username from database
+        Dbhelper dbHelper = new Dbhelper(this);
+        Cursor cursor = dbHelper.getAllUsers();
+        if (cursor.moveToNext()) {
+            do {
+//                usernamedb = cursor.getString(cursor.getColumnIndexOrThrow("Username"));
+//                String permissions = cursor.getString(cursor.getColumnIndexOrThrow("permission"));
+////                    dbpermission = cursor.getString(cursor.getColumnIndexOrThrow("permission"));
+//                String UserID = cursor.getString(cursor.getColumnIndexOrThrow("UserID"));
+//                UserItems useritems = new UserItems(usernamedb,permissions,UserID);
+//                userItems.add(useritems);
+                CheckUserExistance=true;
+
+                // do something with the retrieved data
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
     @Override
     public void onBackPressed() {
         Intent startMain = new Intent(Intent.ACTION_MAIN);
