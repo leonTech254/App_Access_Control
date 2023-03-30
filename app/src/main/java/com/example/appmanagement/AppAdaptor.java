@@ -38,7 +38,13 @@ private Context context;
     public void onBindViewHolder(@NonNull AppHolder holder, @SuppressLint("RecyclerView") int position) {
 
     AppItems AppItems = appItems.get(position);
-    holder.AppName.setText(AppItems.getAppName());
+    if(AppItems.getAppName().length()>5)
+    {
+        holder.AppName.setText(AppItems.getAppName().substring(0,5));
+    }else
+    {
+        holder.AppName.setText(AppItems.getAppName());
+    }
     holder.AppIcon.setImageDrawable(AppItems.getAppIcon());
     holder.itemView.setOnClickListener(new View.OnClickListener() {
         @Override

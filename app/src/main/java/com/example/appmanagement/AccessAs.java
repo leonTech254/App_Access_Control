@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class AccessAs extends AppCompatActivity {
     private String userID;
@@ -18,7 +20,9 @@ public class AccessAs extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_access_as);
         userID=getIntent().getStringExtra("userId");
+        allowedApp="None";
         getData();
+
 
     }
 
@@ -53,5 +57,19 @@ public class AccessAs extends AppCompatActivity {
             Intent intent = new Intent(this,AllApps.class);
             startActivity(intent);
         }
+        if(allowedApp.equals("none"))
+        {
+            Toast.makeText(this, "Try logging in again", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    public void toAllowedApps(View view)
+    {
+        Intent intent = new Intent(this,PermisionOverView.class);
+        intent.putExtra("userId",UserID);
+        intent.putExtra("username",usernamedb);
+        startActivity(intent);
+
     }
 }

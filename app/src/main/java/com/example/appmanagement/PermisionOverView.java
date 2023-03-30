@@ -68,10 +68,10 @@ public class PermisionOverView extends AppCompatActivity {
             if ((applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
                 Drawable appIcon = packageManager.getApplicationIcon(applicationInfo);
                 String appName = packageManager.getApplicationLabel(applicationInfo).toString();
-                System.out.println(appName);
+
 
                 String[] processname = appName.split("\\ ");
-                System.out.println(processname);
+
 
                 String packageName = applicationInfo.packageName;
 
@@ -79,20 +79,22 @@ public class PermisionOverView extends AppCompatActivity {
                 String[] permissions = packageInfo.requestedPermissions;
 
                 // Print the application name and its permissions
-                if (permissions != null) {
-                    System.out.println("Requested permissions:");
-                    for (String permission : permissions) {
-                        System.out.println(permission);
-                    }
-                }
+//                if (permissions != null) {
+//                    System.out.println("Requested permissions:");
+//                    for (String permission : permissions) {
+//                        System.out.println(permission);
+//                    }
+//                }
                 if(dbpermission.equals("all"))
                 {
                     AppItems AppItems = new AppItems(appName, appIcon, packageName);
                     appItems.add(AppItems);
 
                 }else {
-                    if ( ApplistTemp.contains(packageName))
+
+                    if (UsersPermission.contains(appName))
                     {
+
                         AppItems AppItems = new AppItems(appName, appIcon, packageName);
                         appItems.add(AppItems);
 
