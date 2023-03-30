@@ -227,7 +227,7 @@ public class AccessGate extends CameraActivity {
                             JSONObject requestBody = new JSONObject(params);
 
 // Send request using Volley
-                            String url = "http://192.168.43.225:5000/api/rec/faces";
+                            String url = "http://192.168.129.71:5000/api/rec/faces";
                             JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, requestBody, new Response.Listener<JSONObject>() {
                                 @Override
                                 public void onResponse(JSONObject response) {
